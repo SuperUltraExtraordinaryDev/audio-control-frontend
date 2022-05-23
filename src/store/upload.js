@@ -3,7 +3,7 @@ import { SERVER_API_URL } from "../config";
 const upload = async (formData) => {
     return new Promise(async (resolve, reject) => {
         try {
-            const response = await fetch(`${SERVER_API_URL}/upload`, {
+            const response = await fetch(`${SERVER_API_URL}/upload/audio`, {
                 method: "POST",
                 body: formData,
             });

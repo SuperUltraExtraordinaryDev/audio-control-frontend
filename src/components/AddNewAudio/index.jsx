@@ -1,11 +1,14 @@
 import { useState, useCallback } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { PATH } from "../../consts";
 
 import { createAudio } from "../../store/audios-slice";
 
 import upload from "../../store/upload";
 
-const AddNewAudioComponent = ({ onClose, refreshData }) => {
+const AddNewAudioComponent = () => {
+    const navigate = useNavigate();
     const dispatch = useDispatch();
     const [isUploading, setUploading] = useState(false);
 
@@ -32,11 +35,11 @@ const AddNewAudioComponent = ({ onClose, refreshData }) => {
                 };
 
                 await dispatch(createAudio(audioData));
-                refreshData();
+
+                navigate(PATH.Dashboard);
             })
             .finally(() => {
                 setUploading(false);
-                onClose();
             });
     }, []);
 
@@ -106,13 +109,12 @@ const AddNewAudioComponent = ({ onClose, refreshData }) => {
                         )}
                         Upload
                     </button>
-                    <button
-                        disabled={isUploading}
+                    <Link
+                        to={PATH.Dashboard}
                         className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
-                        onClick={() => onClose()}
                     >
                         Cancel
-                    </button>
+                    </Link>
                 </div>
             </form>
         </div>
