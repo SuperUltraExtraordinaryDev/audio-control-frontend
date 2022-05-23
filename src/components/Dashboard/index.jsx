@@ -22,7 +22,7 @@ const DashboardComponent = () => {
     const pageIndex = useSelector((state) => state.audios.page);
     const itemCount = useSelector((state) => state.audios.count);
     const pageCount = useMemo(() => {
-        return Math.ceil(totalCount / itemCount);
+        return itemCount === -1 ? 1 : Math.ceil(totalCount / itemCount);
     }, [totalCount, itemCount]);
     const searchName = useSelector((state) => state.audios.name);
 

@@ -8,14 +8,12 @@ const PaginationComponent = ({
     setPageIndex,
 }) => {
     const goToPrevious = useCallback(() => {
-        console.log("goToPrevious");
         if (pageIndex > 0) {
             setPageIndex(pageIndex - 1);
         }
     }, [pageIndex]);
 
     const goToNext = useCallback(() => {
-        console.log("goToNext");
         if (pageIndex < pageCount - 1) {
             setPageIndex(pageIndex + 1);
         }
@@ -26,7 +24,9 @@ const PaginationComponent = ({
             <span className="text-sm text-gray-700 dark:text-gray-400">
                 Showing&nbsp;
                 <span className="font-semibold text-gray-900 dark:text-white">
-                    {1 + pageIndex * itemCount <= totalCount
+                    {itemCount === -1
+                        ? 1
+                        : 1 + pageIndex * itemCount <= totalCount
                         ? 1 + pageIndex * itemCount
                         : totalCount}
                 </span>
