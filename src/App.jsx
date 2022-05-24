@@ -24,7 +24,7 @@ const App = () => {
                             element={<DashboardPage />}
                         />
                         <Route
-                            path={PATH.AudioControl}
+                            path={`${PATH.AudioControl}/:id`}
                             exact={true}
                             element={<AudioControlPage />}
                         />

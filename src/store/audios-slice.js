@@ -60,8 +60,8 @@ export const fetchAudio = (id) => {
     return async (dispatch) => {
         dispatch(audiosActions.setLoading(true));
         fetcher(`audios/audio/${id}`)
-            .then((audio) => {
-                dispatch(audiosActions.setAudio(audio));
+            .then((result) => {
+                dispatch(audiosActions.setAudio(result.audio));
             })
             .finally(() => {
                 dispatch(audiosActions.setLoading(false));

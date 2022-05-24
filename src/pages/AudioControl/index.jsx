@@ -1,5 +1,13 @@
+// node_modules
+import { useParams } from "react-router-dom";
+
+// components
+import { AudioControlComponent } from "../../components";
+
 const AudioControlPage = () => {
-    return <div>AudioControlPage</div>;
+    const { id } = useParams();
+
+    return <AudioControlComponent id={id} />;
 };
 
 export default AudioControlPage;
