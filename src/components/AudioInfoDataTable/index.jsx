@@ -19,11 +19,15 @@ const AudioInfoDataTableComponent = ({ dataIndex, loading }) => {
 
     return (
         <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-            <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-                <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <table className="w-full text-sm text-left text-gray-500 text-gray-400">
+                <thead className="text-xs text-gray-700 uppercase bg-gray-50 bg-gray-700 text-gray-400">
                     <tr>
                         {audioDataTableHeaders.map((header, index) => (
-                            <th key={index} scope="col" className="px-6 py-3">
+                            <th
+                                key={index}
+                                scope="col"
+                                className="px-6 py-3 text-white"
+                            >
                                 {header}
                             </th>
                         ))}
@@ -34,7 +38,7 @@ const AudioInfoDataTableComponent = ({ dataIndex, loading }) => {
                         audios.map((audioInfo, index) => (
                             <tr
                                 key={index}
-                                className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                                className="border-b bg-gray-800 border-gray-700"
                             >
                                 <td className="px-6 py-4">
                                     {dataIndex + index + 1}
@@ -54,7 +58,7 @@ const AudioInfoDataTableComponent = ({ dataIndex, loading }) => {
                                 <td className="px-6 py-4 text-right">
                                     <Link
                                         to={`${PATH.AudioControl}/${audioInfo._id}`}
-                                        className="font-medium text-blue-600 dark:text-blue-500 hover:underline hover:cursor-pointer"
+                                        className="font-medium text-blue-600 text-blue-500 hover:underline hover:cursor-pointer"
                                     >
                                         Listen
                                     </Link>
@@ -62,7 +66,7 @@ const AudioInfoDataTableComponent = ({ dataIndex, loading }) => {
                             </tr>
                         ))
                     ) : (
-                        <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                        <tr className="border-b bg-gray-800 border-gray-700">
                             <td colSpan={6} className="px-6 py-4">
                                 No Data!
                             </td>
@@ -71,10 +75,10 @@ const AudioInfoDataTableComponent = ({ dataIndex, loading }) => {
                 </tbody>
             </table>
             {loading && (
-                <div className="absolute left-0 right-0 top-0 bottom-0 flex items-center justify-center dark:bg-gray-800 dark:bg-opacity-75">
+                <div className="absolute left-0 right-0 top-0 bottom-0 flex items-center justify-center bg-gray-800 bg-opacity-75">
                     <svg
                         role="status"
-                        className="inline w-8 h-8 mr-2 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                        className="inline w-8 h-8 mr-2 text-gray-200 animate-spin text-gray-600 fill-blue-600"
                         viewBox="0 0 100 101"
                         fill="none"
                         xmlns="http://www.w3.org/2000/svg"

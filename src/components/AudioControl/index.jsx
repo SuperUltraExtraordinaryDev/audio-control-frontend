@@ -129,7 +129,7 @@ const AudioControlComponent = ({ id }) => {
             <div className="flex flex-col w-full">
                 <canvas
                     ref={canvasRef}
-                    className="w-full h-48 dark:bg-gray-700"
+                    className="w-full h-48 bg-gray-700"
                     width={WIDTH}
                     height={HEIGHT}
                 ></canvas>

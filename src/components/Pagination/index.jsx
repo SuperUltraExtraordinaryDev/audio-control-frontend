@@ -21,9 +21,9 @@ const PaginationComponent = ({
 
     return (
         <div className="flex flex-col items-center">
-            <span className="text-sm text-gray-700 dark:text-gray-400">
+            <span className="text-sm text-gray-700 text-gray-400">
                 Showing&nbsp;
-                <span className="font-semibold text-gray-900 dark:text-white">
+                <span className="font-semibold text-gray-900 text-white">
                     {itemCount === -1
                         ? 1
                         : 1 + pageIndex * itemCount <= totalCount
@@ -31,7 +31,7 @@ const PaginationComponent = ({
                         : totalCount}
                 </span>
                 &nbsp;to&nbsp;
-                <span className="font-semibold text-gray-900 dark:text-white">
+                <span className="font-semibold text-gray-900 text-white">
                     {itemCount !== -1
                         ? (pageIndex + 1) * itemCount <= totalCount
                             ? (pageIndex + 1) * itemCount
@@ -39,7 +39,7 @@ const PaginationComponent = ({
                         : totalCount}
                 </span>
                 &nbsp;of&nbsp;
-                <span className="font-semibold text-gray-900 dark:text-white">
+                <span className="font-semibold text-gray-900 text-white">
                     {totalCount}
                 </span>
                 &nbsp;Entries
@@ -50,7 +50,7 @@ const PaginationComponent = ({
             >
                 <ul className="inline-flex -space-x-px">
                     <li
-                        className="py-2 px-3 ml-0 leading-tight text-gray-500 bg-white rounded-l-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                        className="py-2 px-3 ml-0 leading-tight text-gray-500 rounded-l-lg border border-gray-300 bg-gray-800 border-gray-700 text-gray-400"
                         onClick={goToPrevious}
                     >
                         Previous
@@ -59,8 +59,8 @@ const PaginationComponent = ({
                         <li
                             className={
                                 pageIndex === index
-                                    ? "py-2 px-3 text-blue-600 bg-blue-50 border border-gray-300 hover:bg-blue-100 hover:text-blue-700 dark:border-gray-700 dark:bg-gray-700 dark:text-white"
-                                    : "py-2 px-3 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                                    ? "py-2 px-3 leading-tight text-gray-800 border border-gray-300 bg-gray-600 border-gray-700 text-gray-400"
+                                    : "py-2 px-3 leading-tight text-gray-500 border border-gray-300 bg-gray-800 border-gray-700 text-gray-400"
                             }
                             key={index}
                             onClick={() => setPageIndex(index)}
@@ -69,7 +69,7 @@ const PaginationComponent = ({
                         </li>
                     ))}
                     <li
-                        className="py-2 px-3 leading-tight text-gray-500 bg-white rounded-r-lg border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                        className="py-2 px-3 leading-tight text-gray-500 rounded-r-lg border border-gray-300 bg-gray-800 border-gray-700 text-gray-400"
                         onClick={goToNext}
                     >
                         Next
