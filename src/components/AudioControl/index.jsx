@@ -19,6 +19,7 @@ const AudioControlComponent = ({ id }) => {
     const audio = useSelector((state) => state.audios.audio);
 
     const [canvasContext, setCanvasContext] = useState(null);
+    const [audioContext, setAudioContext] = useState(null);
     const [audioAnalyzer, setAudioAnalyzer] = useState(null);
     const [audioFile, setAudioFile] = useState(null);
 
@@ -33,25 +34,27 @@ const AudioControlComponent = ({ id }) => {
         setCanvasContext(context);
     }, [canvasRef.current]);
 
-    const initializeAnalyser = useCallback(() => {
+    const initializeAnalyser = useCallback(async () => {
         if (audio.url) {
             const audioTempFile = new Audio();
-            // audioTempFile.src = `${SERVER_BASE_URL}/${audio.url}`;
-            audioTempFile.src = "/a.mp3";
+            audioTempFile.src = `${SERVER_BASE_URL}/${audio.url}`;
             audioTempFile.controls = true;
             audioTempFile.className = "w-full";
             audioTempFile.crossOrigin = "anonymous";
+            audioRef.current.replaceChildren();
             audioRef.current.appendChild(audioTempFile);
 
             const audioContext = new AudioContext();
+            audioContext.resume();
             const source = audioContext.createMediaElementSource(audioTempFile);
             const analyser = audioContext.createAnalyser();
-            analyser.fftSize = 64;
+            analyser.fftSize = 2048;
             source.connect(audioContext.destination);
             source.connect(analyser);
 
             setAudioFile(audioTempFile);
             setAudioAnalyzer(analyser);
+            setAudioContext(audioContext);
         }
     }, [audio.url]);
 
@@ -59,15 +62,31 @@ const AudioControlComponent = ({ id }) => {
         initializeAnalyser();
     }, [initializeAnalyser]);
 
-    const getFrequencyData = useCallback(
-        (styleAdjuster, canvasContext) => {
-            const bufferLength = audioAnalyzer.frequencyBinCount;
-            const amplitudeArray = new Uint8Array(bufferLength);
-            audioAnalyzer.getByteFrequencyData(amplitudeArray);
-            styleAdjuster(amplitudeArray, canvasContext);
-        },
-        [audioAnalyzer]
-    );
+    useEffect(() => {
+        if (audioFile && audioAnalyzer && audioContext) {
+            requestAnimationFrame(runSpectrum);
+        }
+    }, [audioFile, audioAnalyzer, audioContext]);
+
+    useEffect(() => {
+        if (audioFile) {
+            audioFile.onplay = onPlay;
+        }
+    }, [audioFile]);
+
+    const onPlay = useCallback(async () => {
+        if (audioContext) {
+            await audioContext.resume();
+            audioFile.play();
+        }
+    }, [audioFile, audioContext]);
+
+    const getFrequencyData = (styleAdjuster, canvasContext) => {
+        const bufferLength = audioAnalyzer.frequencyBinCount;
+        const amplitudeArray = new Uint8Array(bufferLength);
+        audioAnalyzer.getByteFrequencyData(amplitudeArray);
+        styleAdjuster(amplitudeArray, canvasContext);
+    };
 
     const drawSpectrum = (dataArray, canvasContext) => {
         canvasContext.clearRect(0, 0, WIDTH, HEIGHT);
@@ -105,15 +124,6 @@ const AudioControlComponent = ({ id }) => {
         requestAnimationFrame(runSpectrum);
     };
 
-    const onStartButtonClicked = useCallback(() => {
-        if (audioFile.paused) {
-            audioFile.play();
-            requestAnimationFrame(runSpectrum);
-        } else {
-            audioFile.pause();
-        }
-    }, [audioFile]);
-
     return (
         <div className="flex justify-between mt-2">
             <div className="flex flex-col w-full">
@@ -124,9 +134,6 @@ const AudioControlComponent = ({ id }) => {
                     height={HEIGHT}
                 ></canvas>
                 <div className="mt-2" ref={audioRef}></div>
-                <button disabled={!audio.url} onClick={onStartButtonClicked}>
-                    Start
-                </button>
             </div>
         </div>
     );
